@@ -76,5 +76,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script async defer src="http://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&amp;callback=initMap"></script>
+
+    @yield('extraScript')
 </body>
 </html>

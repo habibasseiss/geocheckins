@@ -1,5 +1,26 @@
 @extends('layouts.app')
 
+@section('extraScript')
+<script type="text/javascript">
+  var map;
+  function initMap() {
+    latLng = new google.maps.LatLng({{ $coordinates->getLatitude() }}, {{ $coordinates->getLongitude() }});
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: latLng,
+      mapTypeId: 'terrain'
+    });
+
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: map
+    });
+
+  }
+</script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -9,21 +30,27 @@
 
                 <div class="panel-body">
 
-                    <p class="lead text-muted">
-                        Showing results for <code>{{ $request->address }}</code>
-                    </p>
+                    <div class="col-md-8 col-md-offset-2">
 
-                    Latitude: {{ $coordinates->getLatitude() }}
-                    <br>
-                    Longitude: {{ $coordinates->getLongitude() }}
+                        <p class="lead text-muted">
+                            Showing results for <code>{{ $request->address }}</code>
+                        </p>
 
-                    <br><br>
+                        <div id="map" style="height: 500px; width: 700px"></div>
+                        <br>
 
-                    Venues found: {{ $venues->get()->count() }}
+                        <p>
+                            Latitude: {{ $coordinates->getLatitude() }}
+                            <br>
+                            Longitude: {{ $coordinates->getLongitude() }}
+                        </p>
 
-                    <hr>
+                        <p>Venues found: {{ $venues->get()->count() }}</p>
 
-                    <a href="{{ route('home') }}">&larr; Back</a>
+                        <hr>
+
+                        <a href="{{ route('home') }}">&larr; Back</a>
+                    </div>
                 </div>
             </div>
         </div>
