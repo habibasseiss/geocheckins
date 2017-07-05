@@ -10,6 +10,10 @@ http://geocheckins.hneto.com
 
 It is provided a script that converts the format of existing data files to a regular csv format.
 
+The script expects the input file and the output file as parameters:
+
+`python csv-converter.py in.dat out.csv`
+
 The obtained format is shown below.
 ```
 id    |       latitude        |       longitude       
