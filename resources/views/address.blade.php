@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Search results')
+
 @section('extraScript')
 <script type="text/javascript">
   var map;
@@ -22,38 +24,29 @@
 @endsection
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Search result</div>
+    <div class="col-md-8 col-md-offset-2">
 
-                <div class="panel-body">
+        <p class="lead text-muted">
+            Showing results for <code>{{ $request->address }}</code> within a
+            range of <code>{{ $request->radius }}</code> km.
+        </p>
 
-                    <div class="col-md-8 col-md-offset-2">
+        <div id="map" style="height: 500px; max-width: 700px"></div>
+        <br>
 
-                        <p class="lead text-muted">
-                            Showing results for <code>{{ $request->address }}</code>
-                        </p>
+        <p>
+            Latitude: {{ $coordinates->getLatitude() }}
+            <br>
+            Longitude: {{ $coordinates->getLongitude() }}
+        </p>
 
-                        <div id="map" style="height: 500px; width: 700px"></div>
-                        <br>
+        <p class="lead">
+            <strong>Venues found</strong>:
+            {{ $venues->get()->count() }}
+        </p>
 
-                        <p>
-                            Latitude: {{ $coordinates->getLatitude() }}
-                            <br>
-                            Longitude: {{ $coordinates->getLongitude() }}
-                        </p>
+        <hr>
 
-                        <p>Venues found: {{ $venues->get()->count() }}</p>
-
-                        <hr>
-
-                        <a href="{{ route('home') }}">&larr; Back</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <a href="{{ route('home') }}">&larr; Back</a>
     </div>
-</div>
 @endsection
