@@ -1,5 +1,7 @@
 # geocheckins
 
+`geocheckins` is a simple web application that generates useful geographical information about customers, venues and their check-ins on Foursquare social network. The application was developed as an assignment for the UbiComp course at Universidade Federal de Minas Gerais (UFMG) by doctoral student Habib Asseiss Neto.
+
 ## Demo
 
 There is a demo instance of the application available at:
@@ -55,3 +57,22 @@ id,latitude,longitude
 ```
 
 Using the converted csv file it is possible to import data to any database table.
+
+## Importing large datasets into server
+
+Because the csv files are usually very large, the recommended way of importing it to a database server is by command line on the server itself.
+
+Use `mysql -u user -p` command to enter the database console, then use the following command to import the csv file to the specified table:
+
+```
+LOAD DATA LOCAL INFILE 'venues.csv'
+INTO TABLE venues
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(@col1,@col2,@col3) set id=@col1,latitude=@col2,longitude=@col3;
+```
+
+## Screenshot
+
+![geocheckins main interface](screenshots/main.png "geocheckins main interface")

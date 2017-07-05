@@ -3,6 +3,7 @@
 @section('title', 'General information')
 
 @section('content')
+<div class="row">
     <div class="col-md-8 col-md-offset-2">
         <table class="table">
             <thead>
@@ -27,4 +28,5 @@
             </tbody>
         </table>
     </div>
+</div>
 @endsection
