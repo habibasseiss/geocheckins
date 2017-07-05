@@ -15,3 +15,4 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::post('/address', 'HomeController@address')->name('address');
+Route::get('/info', 'HomeController@info')->name('info');

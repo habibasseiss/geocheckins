@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Venue;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,6 +27,13 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function info()
+    {
+        $venues_count = Venue::count();
+
+        return view('info')->with(compact('venues_count'));
+    }
+
     public function address(Request $request)
     {
         $adapter = new \Ivory\HttpAdapter\CurlHttpAdapter();
@@ -38,10 +46,14 @@ class HomeController extends Controller
         $geocode = $geocoder
             ->geocode($request->address);
 
-        // dd($geocode);
         $location = $geocode->first();
         $coordinates = $location->getCoordinates();
 
-        return view('address')->with(compact('location', 'coordinates'));
+        $venues = Venue::filterByCoordinates(
+            $coordinates->getLatitude(),
+            $coordinates->getLongitude(),
+            $request->radius);
+
+        return view('address')->with(compact('location', 'coordinates', 'venues', 'request'));
     }
 }

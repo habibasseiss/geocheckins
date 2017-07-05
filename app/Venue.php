@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Venue extends Model
 {
-    public function scopeFilterByCoordinates($query, $latitude, $longitude, $radius) {
+    public function scopeFilterByCoordinates($query, $latitude, $longitude, $radius=100) {
         return $query->select(
             DB::raw("
                 id,latitude,longitude,
@@ -21,9 +21,9 @@ class Venue extends Model
                      )
                  ) AS distance")
             )
-            ->having('distance', '<', "?")
+            ->having('distance', '<', $radius)
             ->orderBy('distance')
-            ->setBindings([$latitude, $longitude, $latitude,  $radius])
+            ->setBindings([$latitude, $longitude, $latitude])
             ;
     }
 }

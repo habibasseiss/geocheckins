@@ -10,7 +10,7 @@ infile  = open(inputname, 'r')
 outfile = open(outputname, 'w')
 
 for line in infile:
-    if line.startswith('-'):
+    if line.startswith('-') or line.startswith('('):
         continue
     outfile.write(line.replace('|', ',').replace(' ',''))
 
