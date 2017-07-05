@@ -5,15 +5,15 @@ namespace App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Venue extends Model
+class Customer extends Model
 {
+
     public function ratings()
     {
         return $this->hasMany('App\Rating');
     }
 
-    public function scopeFilterByCoordinates($query, $latitude, $longitude, $radius=100)
-    {
+    public function scopeFilterByCoordinates($query, $latitude, $longitude, $radius=10) {
         return $query->select(
             DB::raw("
                 id,latitude,longitude,

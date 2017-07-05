@@ -7,7 +7,7 @@
         Use the form below to search for an address and give a radius limit to
         get the venues for the specified region. E.g. address
         <code>4888 Gore Rd, Highgate Center, VT 05459, USA</code> and radius
-        <code>100</code> km.
+        <code>10</code> km.
     </p>
 
     <form action="{{ route('address') }}" method="post" class="col-md-6 col-md-offset-3">

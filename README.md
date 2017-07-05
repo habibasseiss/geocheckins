@@ -1,10 +1,30 @@
 # geocheckins
 
-## demo
+## Demo
 
-The demo instance of the application has a default user registered `admin@admin.com` with password `123` and it is available at:
-
+There is a demo instance of the application available at:
 http://geocheckins.hneto.com
+
+## Dataset
+
+The dataset used in this application contains 2153471 users, 1143092 venues, 1021970 check-ins, 27098490 social connections, and 2809581 ratings that users assigned to venues; all extracted from the Foursquare application through the public API.
+
+The dataset was obtained from:
+https://archive.org/details/201309_foursquare_dataset_umn
+
+## Geolocation calculations
+
+Most records from the dataset have `latitude` and `longitude` attributes corresponding to a geolocation when certain events occur.
+
+The application uses the coordinates to calculate the venues and customers found within a certain range in kilometers. The Haversine formula is used for computing great-circle distances between two pairs of coordinates on a sphere. More information can be found here:
+https://developers.google.com/maps/articles/phpsqlsearch_v3#finding-locations-with-mysql
+
+## Google Maps API
+
+Google Maps API is used to display the map of the requested address.
+
+Google Maps API documentation is found at:
+https://developers.google.com/maps/documentation/
 
 ## csv-converter
 
@@ -26,7 +46,7 @@ id    |       latitude        |       longitude
 
 The `csv-converter` script will translate it to a regular csv file, as shown below.
 
-```csv
+```
 id,latitude,longitude
 101759,45.5405832,-73.5965186
 101762,45.5154736,-73.5643264

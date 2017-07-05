@@ -5,11 +5,12 @@
 @section('extraScript')
 <script type="text/javascript">
   var map;
+  var venues;
+
   function initMap() {
     latLng = new google.maps.LatLng({{ $coordinates->getLatitude() }}, {{ $coordinates->getLongitude() }});
 
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 10,
       center: latLng,
       mapTypeId: 'terrain'
     });
@@ -18,6 +19,18 @@
       position: latLng,
       map: map
     });
+
+    var circle = new google.maps.Circle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.5,
+        strokeWeight: 2,
+        fillOpacity: 0.1,
+        map: map,
+        center: latLng,
+        radius: {{ $request->radius*1000 }}
+      });
+
+    map.fitBounds(circle.getBounds());
 
   }
 </script>
@@ -31,6 +44,21 @@
             range of <code>{{ $request->radius }}</code> km.
         </p>
 
+        <p class="lead">
+            <strong>Venues found</strong>:
+            {{ $venues->get()->count() }}
+
+            <br>
+
+            <strong>Customers found</strong>:
+            {{ $customers->get()->count() }}
+
+            <br>
+
+            <strong>Average venue rating</strong>:
+            {{ $average_rating }}
+        </p>
+
         <div id="map" style="height: 500px; max-width: 700px"></div>
         <br>
 
@@ -38,11 +66,6 @@
             Latitude: {{ $coordinates->getLatitude() }}
             <br>
             Longitude: {{ $coordinates->getLongitude() }}
-        </p>
-
-        <p class="lead">
-            <strong>Venues found</strong>:
-            {{ $venues->get()->count() }}
         </p>
 
         <hr>

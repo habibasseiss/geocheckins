@@ -3,20 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Venue;
+use App\Customer;
+use App\Rating;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -30,8 +22,10 @@ class HomeController extends Controller
     public function info()
     {
         $venues_count = Venue::count();
+        $customers_count = Customer::count();
+        $ratings_count = Rating::count();
 
-        return view('info')->with(compact('venues_count'));
+        return view('info')->with(compact('venues_count', 'customers_count', 'ratings_count'));
     }
 
     public function address(Request $request)
@@ -54,6 +48,14 @@ class HomeController extends Controller
             $coordinates->getLongitude(),
             $request->radius);
 
-        return view('address')->with(compact('location', 'coordinates', 'venues', 'request'));
+        $venues_ids = $venues->pluck('id');
+        $average_rating = Rating::byVenuesIds($venues_ids);
+
+        $customers = Customer::filterByCoordinates(
+            $coordinates->getLatitude(),
+            $coordinates->getLongitude(),
+            $request->radius);
+
+        return view('address')->with(compact('location', 'coordinates', 'venues', 'average_rating', 'customers', 'request'));
     }
 }

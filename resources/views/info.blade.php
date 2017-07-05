@@ -6,12 +6,24 @@
     <div class="col-md-8 col-md-offset-2">
         <table class="table">
             <thead>
-                <th>Table</th>
-                <th># of records</th>
+                <tr>
+                    <th>Table</th>
+                    <th># of records</th>
+                </tr>
             </thead>
             <tbody>
-                <td><code>venues</code></td>
-                <td>{{ $venues_count }}</td>
+                <tr>
+                    <td><code>venues</code></td>
+                    <td>{{ $venues_count }}</td>
+                </tr>
+                <tr>
+                    <td><code>customers</code></td>
+                    <td>{{ $customers_count }}</td>
+                </tr>
+                <tr>
+                    <td><code>ratings</code></td>
+                    <td>{{ $ratings_count }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
