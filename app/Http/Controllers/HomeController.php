@@ -25,4 +25,23 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function address(Request $request)
+    {
+        $adapter = new \Ivory\HttpAdapter\CurlHttpAdapter();
+        $geocoder = new \Geocoder\ProviderAggregator();
+
+        $geocoder->registerProviders([
+            new \Geocoder\Provider\GoogleMaps($adapter),
+        ]);
+
+        $geocode = $geocoder
+            ->geocode($request->address);
+
+        // dd($geocode);
+        $location = $geocode->first();
+        $coordinates = $location->getCoordinates();
+
+        return view('address')->with(compact('location', 'coordinates'));
+    }
 }
