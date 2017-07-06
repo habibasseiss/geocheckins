@@ -13,6 +13,11 @@ class Customer extends Model
         return $this->hasMany('App\Rating');
     }
 
+    public function checkins()
+    {
+        return $this->hasMany('App\Checkin');
+    }
+
     public function scopeFilterByCoordinates($query, $latitude, $longitude, $radius=10) {
         return $query->select(
             DB::raw("

@@ -45,19 +45,28 @@
             range of <code>{{ $request->radius }}</code> km.
         </p>
 
-        <p class="lead">
-            <strong>Venues found</strong>:
-            {{ $venues->get()->count() }}
+        <p>
+        <div class="row lead">
+            <div class="col-md-6">
+                <strong>Venues found</strong>:
+                {{ $venues->get()->count() }}
 
-            <br>
+                <br>
 
-            <strong>Customers found</strong>:
-            {{ $customers->get()->count() }}
+                <strong>Customers found</strong>:
+                {{ $customers->get()->count() }}
+            </div>
 
-            <br>
+            <div class="col-md-6">
+                <strong>Average venue rating</strong>:
+                {{ number_format($average_rating, 2) }}
 
-            <strong>Average venue rating</strong>:
-            {{ $average_rating }}
+                <br>
+
+                <strong>Total check-ins</strong>:
+                {{ $checkins_count }}
+            </div>
+        </div>
         </p>
 
         <div id="map" style="height: 500px; max-width: 700px"></div>

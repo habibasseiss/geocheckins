@@ -12,6 +12,11 @@ class Venue extends Model
         return $this->hasMany('App\Rating');
     }
 
+    public function checkins()
+    {
+        return $this->hasMany('App\Checkin');
+    }
+
     public function scopeFilterByCoordinates($query, $latitude, $longitude, $radius=100)
     {
         return $query->select(

@@ -2,10 +2,9 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Rating extends Model
+class Checkin extends Model
 {
     public function customer()
     {
@@ -17,10 +16,9 @@ class Rating extends Model
         return $this->belongsTo('App\Venue');
     }
 
-    public function scopeAverageByVenuesIds($query, $venues_ids)
+    public function scopeCountByVenuesIds($query, $venues_ids)
     {
         return $query
-            ->whereIn('venue_id', $venues_ids)
-            ->avg('rating');
+            ->whereIn('venue_id', $venues_ids);
     }
 }

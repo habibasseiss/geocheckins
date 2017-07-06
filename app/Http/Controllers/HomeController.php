@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Venue;
 use App\Customer;
 use App\Rating;
+use App\Checkin;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -49,13 +50,22 @@ class HomeController extends Controller
             $request->radius);
 
         $venues_ids = $venues->pluck('id');
-        $average_rating = Rating::byVenuesIds($venues_ids);
+        $average_rating = Rating::averageByVenuesIds($venues_ids);
+        $checkins_count = Checkin::countByVenuesIds($venues_ids)->count();
 
         $customers = Customer::filterByCoordinates(
             $coordinates->getLatitude(),
             $coordinates->getLongitude(),
             $request->radius);
 
-        return view('address')->with(compact('location', 'coordinates', 'venues', 'average_rating', 'customers', 'request'));
+        return view('address')->with(compact(
+            'location',
+            'coordinates',
+            'venues',
+            'average_rating',
+            'checkins_count',
+            'customers',
+            'request'
+        ));
     }
 }
