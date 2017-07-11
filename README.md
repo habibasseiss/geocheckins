@@ -2,6 +2,8 @@
 
 `geocheckins` is a simple web application that generates useful geographical information about customers, venues and their check-ins on Foursquare social network. The application was developed as an assignment for the UbiComp course at Universidade Federal de Minas Gerais (UFMG) by doctoral student Habib Asseiss Neto.
 
+The application allows you to query any location using Google Maps API. Then a map is displayed along with information about Foursquare check-ins made in that area that includes number of venues, number of customers, number of check-ins and the average rating given to those check-ins. The offered information can be useful and interesting, e.g. there can be calculated the average venue rating in different cities in different countries. You can see for instance that the average rating using the address `R. Santa Teresa, 64 - Centro, São Paulo - SP` (within `50` km) is 2.49 (out of 5.00) and on the other hand at `4888 Gore Rd, Highgate Center, VT 05459, USA` (within `50` km) is 4.10 (out of 5.00). This information allows a deeper study on the average rating of the different cities and countries and the customer satisfaction in different locations.
+
 ## Demo
 
 There is a demo instance of the application available at:
@@ -18,7 +20,20 @@ https://archive.org/details/201309_foursquare_dataset_umn
 
 Most records from the dataset have `latitude` and `longitude` attributes corresponding to a geolocation when certain events occur.
 
-The application uses the coordinates to calculate the venues and customers found within a certain range in kilometers. The Haversine formula is used for computing great-circle distances between two pairs of coordinates on a sphere. More information can be found here:
+The application uses the coordinates to calculate the venues and customers found within a certain range in kilometers. The Haversine formula is used for computing great-circle distances between two pairs of coordinates on a sphere.
+
+The following SQL query finds points within a range of 25 km to the 37,-122 coordinate. To search in miles instead of kilometers, replace 6371 with 3959.
+
+```
+SELECT id,
+( 6371 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance
+FROM markers
+HAVING distance < 25
+ORDER BY distance
+LIMIT 0 , 20
+```
+
+More information can be found here:
 https://developers.google.com/maps/articles/phpsqlsearch_v3#finding-locations-with-mysql
 
 ## Google Maps API
@@ -72,6 +87,10 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES
 (@col1,@col2,@col3) set id=@col1,latitude=@col2,longitude=@col3;
 ```
+
+## Limitations
+
+The currently simple implementation has a memory limitation on the number of venues returned on a given location. For instance, you can't retrieve information using the address `New York, NY` and a range of a few kilometers. So, try to be more specific about the address and lower the range.
 
 ## Screenshot
 

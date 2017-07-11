@@ -49,17 +49,17 @@
         <div class="row lead">
             <div class="col-md-6">
                 <strong>Venues found</strong>:
-                {{ $venues->get()->count() }}
+                {{ $venues_count }}
 
                 <br>
 
                 <strong>Customers found</strong>:
-                {{ $customers->get()->count() }}
+                {{ $customers_count }}
             </div>
 
             <div class="col-md-6">
                 <strong>Average venue rating</strong>:
-                {{ number_format($average_rating, 2) }}
+                {{ number_format($average_rating, 2) }} / 5.00
 
                 <br>
 

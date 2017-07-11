@@ -49,22 +49,25 @@ class HomeController extends Controller
             $coordinates->getLongitude(),
             $request->radius);
 
-        $venues_ids = $venues->pluck('id');
-        $average_rating = Rating::averageByVenuesIds($venues_ids);
-        $checkins_count = Checkin::countByVenuesIds($venues_ids)->count();
-
         $customers = Customer::filterByCoordinates(
             $coordinates->getLatitude(),
             $coordinates->getLongitude(),
             $request->radius);
 
+        $venues_count = $venues->pluck('id')->count();
+        $customers_count = $customers->pluck('id')->count();
+
+        $venues_ids = $venues->pluck('id');
+        $average_rating = Rating::averageByVenuesIds($venues_ids);
+        $checkins_count = Checkin::countByVenuesIds($venues_ids)->count();
+
         return view('address')->with(compact(
             'location',
             'coordinates',
-            'venues',
+            'venues_count',
             'average_rating',
             'checkins_count',
-            'customers',
+            'customers_count',
             'request'
         ));
     }
